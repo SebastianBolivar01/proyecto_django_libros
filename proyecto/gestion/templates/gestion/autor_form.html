@@ -1,0 +1,62 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Nuevo{% endif %} Autor - LetraViva{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb small mb-2">
+            <li class="breadcrumb-item"><a href="{% url 'gestion:lista_autores' %}" class="text-decoration-none">Autores</a></li>
+            <li class="breadcrumb-item active">{% if form.instance.pk %}Editar{% else %}Nuevo registro{% endif %}</li>
+        </ol>
+    </nav>
+    <h1><i class="bi bi-person-lines-fill me-2 text-teal"></i>{% if form.instance.pk %}Modificar datos del autor{% else %}Registrar nuevo autor{% endif %}</h1>
+</div>
+
+<form method="post" novalidate>
+    {% csrf_token %}
+
+    {% if form.errors %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        Por favor corrija los errores señalados a continuación.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endif %}
+
+    <div class="row g-3">
+        {% for field in form %}
+        <div class="{% if field.name == 'biografia' %}col-12{% else %}col-md-6{% endif %}">
+            <label for="{{ field.id_for_label }}" class="form-label fw-medium small">
+                {{ field.label }}
+                {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+            </label>
+            {{ field }}
+            {% if field.help_text %}
+            <div class="form-text">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+            <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4 pt-3 border-top d-flex gap-2">
+        <button type="submit" class="btn btn-accent">
+            <i class="bi bi-check-lg me-1"></i>{% if form.instance.pk %}Actualizar{% else %}Registrar{% endif %}
+        </button>
+        <a href="{% url 'gestion:lista_autores' %}" class="btn btn-outline-secondary">Volver</a>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .text-teal { color: #0d9488 !important; }
+    .form-control:focus, .form-select:focus {
+        border-color: #0d9488;
+        box-shadow: 0 0 0 0.2rem rgba(13, 148, 136, 0.15);
+    }
+</style>
+{% endblock %}

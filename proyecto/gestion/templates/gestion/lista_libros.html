@@ -1,0 +1,63 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Catálogo de Libros - LetraViva{% endblock %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+    <div>
+        <h1 class="mb-1"><i class="bi bi-collection me-2 text-blue"></i>Catálogo de Libros</h1>
+        <p class="text-muted mb-0 small">{{ libros|length }} obra{{ libros|length|pluralize:"s" }} disponible{{ libros|length|pluralize:"s" }}</p>
+    </div>
+    <a href="{% url 'gestion:crear_libro' %}" class="btn btn-accent">
+        <i class="bi bi-plus-lg me-1"></i> Agregar Libro
+    </a>
+</div>
+
+{% if libros %}
+<div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr class="text-muted small text-uppercase">
+                <th style="font-weight:600">Título</th>
+                <th style="font-weight:600">Categoría</th>
+                <th style="font-weight:600">Publicación</th>
+                <th style="font-weight:600">ISBN</th>
+                <th style="font-weight:600">Escritor</th>
+                <th style="font-weight:600" class="text-end">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in libros %}
+            <tr>
+                <td class="fw-semibold">{{ libro.titulo }}</td>
+                <td><span class="badge rounded-pill" style="background:#dbeafe;color:#2563eb;">{{ libro.genero }}</span></td>
+                <td class="text-muted small">{{ libro.fecha_publicacion|date:"d M, Y" }}</td>
+                <td><code class="small">{{ libro.isbn }}</code></td>
+                <td>{{ libro.autor.nombre }}</td>
+                <td class="text-end">
+                    <a href="{% url 'gestion:editar_libro' libro.pk %}" class="btn btn-sm btn-outline-secondary me-1" title="Editar">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'gestion:eliminar_libro' libro.pk %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="text-center py-5 text-muted">
+    <i class="bi bi-journal-x" style="font-size:2.5rem;"></i>
+    <p class="mt-3 mb-0">El catálogo está vacío por el momento.</p>
+    <a href="{% url 'gestion:crear_libro' %}" class="btn btn-accent mt-3">Agregar primer libro</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .text-blue { color: #3b82f6 !important; }
+</style>
+{% endblock %}

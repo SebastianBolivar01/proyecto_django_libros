@@ -1,0 +1,89 @@
+{% extends 'gestion/base.html' %}
+
+{% block title %}Inicio - LetraViva{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="display-5 fw-bold heading-gradient mb-2">LetraViva</h1>
+    <p class="text-muted fs-6">Plataforma para la administración de autores y obras literarias</p>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-sm-6">
+        <div class="card-surface p-4 text-center h-100">
+            <div class="icon-circle bg-teal mx-auto mb-3">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <h5 class="fw-bold">Autores</h5>
+            <p class="display-6 fw-bold text-teal">{{ autores_count }}</p>
+            <p class="text-muted small mb-3">escritores registrados</p>
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{% url 'gestion:lista_autores' %}" class="btn btn-accent btn-sm">Consultar</a>
+                <a href="{% url 'gestion:crear_autor' %}" class="btn btn-outline-accent btn-sm">+ Nuevo</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card-surface p-4 text-center h-100">
+            <div class="icon-circle bg-blue mx-auto mb-3">
+                <i class="bi bi-journal-bookmark-fill"></i>
+            </div>
+            <h5 class="fw-bold">Libros</h5>
+            <p class="display-6 fw-bold text-blue">{{ libros_count }}</p>
+            <p class="text-muted small mb-3">obras catalogadas</p>
+            <div class="d-flex gap-2 justify-content-center">
+                <a href="{% url 'gestion:lista_libros' %}" class="btn btn-accent btn-sm">Consultar</a>
+                <a href="{% url 'gestion:crear_libro' %}" class="btn btn-outline-accent btn-sm">+ Nuevo</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card-surface p-4 h-100">
+            <h6 class="fw-bold mb-3"><i class="bi bi-check2-square text-teal me-2"></i>Módulos del sistema</h6>
+            <ul class="list-unstyled small mb-0">
+                <li class="mb-1"><i class="bi bi-check-circle text-success me-1"></i> Registro y edición de autores</li>
+                <li class="mb-1"><i class="bi bi-check-circle text-success me-1"></i> Catálogo de libros por autor</li>
+                <li class="mb-1"><i class="bi bi-check-circle text-success me-1"></i> Operaciones CRUD completas</li>
+                <li><i class="bi bi-check-circle text-success me-1"></i> Panel de administración Django</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card-surface p-4 h-100">
+            <h6 class="fw-bold mb-3"><i class="bi bi-link-45deg text-teal me-2"></i>Accesos directos</h6>
+            <ul class="list-unstyled small mb-0">
+                <li class="mb-1"><a href="{% url 'gestion:crear_autor' %}" class="text-decoration-none"><i class="bi bi-plus-circle me-1"></i> Registrar un autor</a></li>
+                <li class="mb-1"><a href="{% url 'gestion:crear_libro' %}" class="text-decoration-none"><i class="bi bi-plus-circle me-1"></i> Agregar un libro</a></li>
+                <li class="mb-1"><a href="{% url 'gestion:lista_autores' %}" class="text-decoration-none"><i class="bi bi-list-ul me-1"></i> Ver todos los autores</a></li>
+                <li><a href="{% url 'gestion:lista_libros' %}" class="text-decoration-none"><i class="bi bi-list-ul me-1"></i> Ver todos los libros</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .heading-gradient {
+        background: linear-gradient(135deg, #0d9488 0%, #0ea5e9 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .icon-circle {
+        width: 56px; height: 56px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem; color: #fff;
+    }
+    .bg-teal { background: linear-gradient(135deg, #0d9488, #2dd4bf); }
+    .bg-blue { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+    .text-teal { color: #0d9488 !important; }
+    .text-blue { color: #3b82f6 !important; }
+</style>
+{% endblock %}
